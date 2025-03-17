@@ -15,7 +15,7 @@ S = "${WORKDIR}/git"
 MIX_ENV = "dev"
 
 DEPENDS = "libmnl"
-RDEPENDS:${PN} += "fwup busybox boardid"
+RDEPENDS:${PN} += "fwup busybox boardid libubootenv-bin"
 
 export ERL_CFLAGS = "-I${STAGING_LIBDIR}/erlang/lib/${@get_erlang_application(d, "erl_interface")}/include \
                      -I${STAGING_LIBDIR}/erlang/${@get_erlang_application(d, "erts")}/include"
