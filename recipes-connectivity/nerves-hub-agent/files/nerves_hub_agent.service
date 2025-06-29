@@ -1,0 +1,17 @@
+[Unit]
+Description=nerves_hub_agent
+Wants=network-online.target
+After=network-online.target remote-fs.target
+
+[Service]
+#User=nerves_hub_agent
+#Group=nerves_hub_agent
+
+ExecStart=/usr/lib/nerves-hub-agent/bin/nerves_hub_agent start
+
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
