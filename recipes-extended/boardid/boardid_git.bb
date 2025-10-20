@@ -9,7 +9,9 @@ LIC_FILES_CHKSUM = "file://LICENSES/Apache-2.0.txt;md5=c846ebb396f8b174b10ded477
 
 RECIPE_MAINTAINER = "João Henrique Ferreira de Freitas <joaohf@gmail.com>"
 
-SRC_URI = "git://github.com/nerves-project/boardid/;protocol=https;branch=main"
+SRC_URI = "git://github.com/nerves-project/boardid/;protocol=https;branch=main \
+           file://boardid.config \
+           "
 
 PV = "1.0+git"
 SRCREV = "060c2f856c37899961d12deb3f9f304cf1cbf3a5"
@@ -27,5 +29,8 @@ do_compile () {
 do_install () {
         install -d ${D}${bindir}
         install -m 0755 ${S}/boardid ${D}${bindir}
+
+        install -d ${D}${sysconfdir}
+        install -m 0644 ${UNPACKDIR}/boardid.config ${D}${sysconfdir}
 }
 
