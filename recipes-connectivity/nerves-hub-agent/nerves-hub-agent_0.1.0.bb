@@ -35,6 +35,18 @@ INITSCRIPT_PARAMS = "start 99 5 2 3 . stop 20 0 1 6 ."
 
 SYSTEMD_SERVICE:${PN} = "nerves_hub_agent.service"
 
+#export NERVES_HUB_LINK_PRODUCT_KEY ?= "change me"
+#export NERVES_HUB_LINK_PRODUCT_SECRET ?= "change me"
+
+python __anonymous() {
+    if not d.getVar('NERVES_HUB_LINK_PRODUCT_KEY'):
+        bb.fatal("Required variable NERVES_HUB_LINK_PRODUCT_KEY is not defined. \
+                  Set NERVES_HUB_LINK_PRODUCT_KEY in local.conf or in a recipe/append.")
+    if not d.getVar('NERVES_HUB_LINK_PRODUCT_SECRET'):
+        bb.fatal("Required variable NERVES_HUB_LINK_PRODUCT_SECRET is not defined. \
+                  Set NERVES_HUB_LINK_PRODUCT_SECRET in local.conf or in a recipe/append.")
+}
+
 do_install:append() {
     # Install systemd unit files
     if ${@bb.utils.contains('DISTRO_FEATURES','systemd','true','false',d)}; then
