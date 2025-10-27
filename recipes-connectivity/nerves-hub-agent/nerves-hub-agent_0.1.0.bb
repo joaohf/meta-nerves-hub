@@ -12,8 +12,6 @@ SRC_URI = "git://github.com/joaohf/nerves_hub_agent;protocol=https;branch=main \
 PV = "0.1.0"
 SRCREV = "836747a43a02be5b5872e51a06abd566787b8edf"
 
-S = "${WORKDIR}/git"
-
 MIX_ENV = "yocto"
 
 DEPENDS = "libmnl"

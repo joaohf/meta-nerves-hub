@@ -16,8 +16,6 @@ SRC_URI = "git://github.com/nerves-project/boardid/;protocol=https;branch=main \
 PV = "1.0+git"
 SRCREV = "060c2f856c37899961d12deb3f9f304cf1cbf3a5"
 
-S = "${WORKDIR}/git"
-
 do_configure () {
 	:
 }
