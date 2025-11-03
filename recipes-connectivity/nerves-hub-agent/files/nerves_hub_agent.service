@@ -1,12 +1,15 @@
 [Unit]
-Description=nerves_hub_agent
+Description=nerves hub agent
 Wants=network-online.target
 After=network-online.target remote-fs.target
 
 [Service]
-#User=nerves_hub_agent
-#Group=nerves_hub_agent
-
+#User=nerves-hub-agent
+#Group=nerves-hub-agent
+# Set to root until I figured out which permissions are needed
+User=root
+Group=root
+WorkingDirectory=/var/lib/nerves-hub-agent
 ExecStart=/usr/lib/nerves-hub-agent/bin/nerves_hub_agent start
 
 Restart=on-failure

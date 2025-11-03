@@ -10,7 +10,7 @@ SRC_URI = "git://github.com/joaohf/nerves_hub_agent;protocol=https;branch=main \
            "
 
 PV = "0.1.0"
-SRCREV = "836747a43a02be5b5872e51a06abd566787b8edf"
+SRCREV = "c0795fbbb0f4b126734a9508b50ba90bd5c02205"
 
 MIX_ENV = "yocto"
 
@@ -20,7 +20,7 @@ RDEPENDS:${PN} += "fwup busybox boardid libubootenv-bin ca-certificates"
 # TODO: what happen if busybox is not provided ?
 RDEPENDS:${PN} += "busybox"
 
-inherit mix systemd update-rc.d
+inherit mix systemd update-rc.d useradd
 
 ERL_INTERFACE_VERSION = "`pkg-config --modversion erl_ei`"
 export ERL_EI_LIBDIR = "${STAGING_LIBDIR}/erlang/lib/erl_interface-${ERL_INTERFACE_VERSION}/lib/"
@@ -35,8 +35,8 @@ INITSCRIPT_PARAMS = "start 99 5 2 3 . stop 20 0 1 6 ."
 
 SYSTEMD_SERVICE:${PN} = "nerves_hub_agent.service"
 
-#export NERVES_HUB_LINK_PRODUCT_KEY ?= "change me"
-#export NERVES_HUB_LINK_PRODUCT_SECRET ?= "change me"
+export NERVES_HUB_LINK_PRODUCT_KEY ?= "change me"
+export NERVES_HUB_LINK_PRODUCT_SECRET ?= "change me"
 
 python __anonymous() {
     if not d.getVar('NERVES_HUB_LINK_PRODUCT_KEY'):
@@ -59,3 +59,7 @@ do_install:append() {
         install -Dm 0755 ${UNPACKDIR}/nerves_hub_agent.init ${D}/${sysconfdir}/init.d/nerves_hub_agent
     fi
 }
+
+USERADD_PACKAGES = "${PN}"
+GROUPADD_PARAM:${PN} = "--system nerves-hub-agent"
+USERADD_PARAM:${PN}  = "--system --create-home --home /var/lib/nerves-hub-agent -g nerves-hub-agent nerves-hub-agent"
